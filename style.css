@@ -60,14 +60,11 @@ img { display: block; max-width: 100%; }
 .section-title::after {
   content: "";
   display: block;
-  width: 0;
-  height: 2px;
+  width: 48px;
+  height: 1px;
   background: var(--lemon-deep);
-  margin: 16px auto 0;
-  transition: width .9s ease .35s;
+  margin: 18px auto 0;
 }
-.section-title.visible::after,
-.visible .section-title::after { width: 64px; }
 
 .amp {
   font-family: var(--serif);
@@ -157,9 +154,9 @@ img { display: block; max-width: 100%; }
 .arch img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform .8s ease;
+  transition: transform 1.4s ease;
 }
-.arch:hover img { transform: scale(1.04); }
+.arch:hover img { transform: scale(1.02); }
 
 .lemon--hero {
   position: absolute;
@@ -279,10 +276,10 @@ img { display: block; max-width: 100%; }
   line-height: 1.1;
 }
 .timeline__body { grid-column: 3; grid-row: 1; }
-.timeline__item:nth-child(2) { transition-delay: .1s; }
-.timeline__item:nth-child(3) { transition-delay: .2s; }
-.timeline__item:nth-child(4) { transition-delay: .3s; }
-.timeline__item:nth-child(5) { transition-delay: .4s; }
+.timeline__item:nth-child(2) { transition-delay: .08s; }
+.timeline__item:nth-child(3) { transition-delay: .16s; }
+.timeline__item:nth-child(4) { transition-delay: .24s; }
+.timeline__item:nth-child(5) { transition-delay: .32s; }
 .timeline__body h3 {
   font-family: var(--sans);
   font-weight: 500;
@@ -342,18 +339,7 @@ img { display: block; max-width: 100%; }
   border-radius: 50%;
   background: var(--c);
   border: 1.5px solid var(--ink);
-  opacity: 0;
-  transform: scale(.4);
-  transition: opacity .5s ease, transform .55s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s;
 }
-.palette.visible .swatch { opacity: 1; transform: none; }
-.swatch:hover { box-shadow: 4px 4px 0 var(--lemon); }
-.palette .swatch:nth-child(2) { transition-delay: .07s; }
-.palette .swatch:nth-child(3) { transition-delay: .14s; }
-.palette .swatch:nth-child(4) { transition-delay: .21s; }
-.palette .swatch:nth-child(5) { transition-delay: .28s; }
-.palette .swatch:nth-child(6) { transition-delay: .35s; }
-.palette .swatch:nth-child(7) { transition-delay: .42s; }
 
 .wishes {
   display: grid;
@@ -366,12 +352,9 @@ img { display: block; max-width: 100%; }
   padding: clamp(24px, 4vw, 40px);
   text-align: center;
   box-shadow: 10px 10px 0 var(--tint);
-  transition: transform .35s ease, box-shadow .35s ease;
+  transition: box-shadow .5s ease;
 }
-.wish-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 13px 13px 0 var(--lemon);
-}
+.wish-card:hover { box-shadow: 10px 10px 0 var(--lemon); }
 .wish-card svg { width: 56px; height: 56px; margin: 0 auto 14px; }
 .wish-card h3 {
   font-family: var(--serif);
@@ -486,52 +469,23 @@ img { display: block; max-width: 100%; }
 }
 .footer__note { margin-top: 22px; font-size: 15px; }
 
-/* ─────────── ДЕКОРАТИВНЫЕ ЛИМОНЫ ─────────── */
-.deco {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  will-change: transform;
-  transform: translateY(var(--py, 0px));
-}
-.deco--invite-l { width: 88px; left: 3%; top: 48px; opacity: .55; }
-.deco--invite-r { width: 110px; right: 2%; bottom: 24px; opacity: .45; transform: translateY(var(--py, 0px)) scaleX(-1); }
-.deco--program { width: 120px; left: 4%; bottom: 120px; opacity: .35; }
-.deco--dress { width: 130px; right: -18px; top: 90px; opacity: .4; }
-
-/* лёгкое «покачивание» самого лимона внутри svg */
-.deco use, .lemon--hero use {
-  animation: sway 7s ease-in-out infinite alternate;
-  transform-origin: 60px 60px;
-}
-@keyframes sway {
-  from { transform: rotate(-4deg); }
-  to { transform: rotate(5deg); }
-}
-
 /* ─────────── АНИМАЦИЯ ПОЯВЛЕНИЯ ─────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .7s ease, transform .7s ease;
+  transform: translateY(16px);
+  transition: opacity 1s cubic-bezier(.22, .61, .36, 1), transform 1s cubic-bezier(.22, .61, .36, 1);
 }
 .reveal.visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .marquee__track { animation: none; }
-  .deco use, .lemon--hero use { animation: none; }
-  .section-title::after { width: 64px; transition: none; }
-  .palette .swatch { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
 
 /* ─────────── МОБИЛЬНАЯ ВЕРСИЯ ─────────── */
 @media (max-width: 820px) {
   .hero { min-height: auto; }
-  .deco--program, .deco--dress { display: none; }
-  .deco--invite-l { width: 56px; top: 16px; }
-  .deco--invite-r { width: 72px; bottom: 8px; }
   .hero__inner { grid-template-columns: 1fr; gap: 40px; }
   .hero__text { text-align: center; order: 1; }
   .hero__names { align-items: center; }
