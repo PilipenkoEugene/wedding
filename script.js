@@ -47,12 +47,19 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
 /* ── Поле «имя пары» показываем только при выборе «Приду с парой» ── */
 const partnerField = document.getElementById("partner-field");
+const partnerInput = document.getElementById("f-partner");
+const syncPartnerField = () => {
+  const checked = document.querySelector('input[name="attendance"]:checked');
+  const open = !!checked && checked.value === "Приду с парой";
+  partnerField.classList.toggle("open", open);
+  partnerInput.disabled = !open;
+  if (!open) partnerInput.value = "";
+};
 document.querySelectorAll('input[name="attendance"]').forEach((radio) => {
-  radio.addEventListener("change", () => {
-    partnerField.hidden = radio.value !== "Приду с парой" || !radio.checked;
-    if (partnerField.hidden) document.getElementById("f-partner").value = "";
-  });
+  radio.addEventListener("change", syncPartnerField);
 });
+// браузер мог восстановить выбор после обновления страницы
+syncPartnerField();
 
 /* ── Отправка формы ── */
 const form = document.getElementById("rsvp-form");

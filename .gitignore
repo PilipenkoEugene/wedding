@@ -2,3 +2,7 @@
 google-apps-script.gs
 .claude/
 .DS_Store
+
+# Превью-скриншоты для обсуждения дизайна
+/*.jpeg
+/*.png
