@@ -1,0 +1,4 @@
+# Не публиковать: содержит токен Telegram-бота
+google-apps-script.gs
+.claude/
+.DS_Store
