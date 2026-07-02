@@ -45,6 +45,29 @@ const observer = new IntersectionObserver(
 );
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
+/* ── Параллакс декоративных лимонов ── */
+const parallaxEls = Array.from(document.querySelectorAll("[data-speed]"));
+if (parallaxEls.length && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let ticking = false;
+  const updateParallax = () => {
+    const mid = window.innerHeight / 2;
+    parallaxEls.forEach((el) => {
+      const host = el.closest(".section, .hero") || el.parentElement;
+      const r = host.getBoundingClientRect();
+      const offset = (r.top + r.height / 2 - mid) * parseFloat(el.dataset.speed);
+      el.style.setProperty("--py", offset.toFixed(1) + "px");
+    });
+    ticking = false;
+  };
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+  updateParallax();
+}
+
 /* ── Поле «имя пары» показываем только при выборе «Приду с парой» ── */
 const partnerField = document.getElementById("partner-field");
 document.querySelectorAll('input[name="attendance"]').forEach((radio) => {
