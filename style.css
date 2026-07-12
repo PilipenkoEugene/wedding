@@ -601,40 +601,46 @@ figure { margin: 0; }
   .rsvp__card { padding-top: 60px; }
 }
 
-/* ─────────── МУЗЫКА ─────────── */
+/* ─────────── МУЗЫКА: виниловая пластинка ─────────── */
 .music-toggle {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 50;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  background: var(--paper);
-  color: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: var(--sans);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
-  transition: background .3s ease, color .3s ease;
+  justify-content: center;
+  /* дорожки пластинки + светлый «пятачок» в центре */
+  background:
+    radial-gradient(circle, var(--paper) 0 12px, transparent 12.5px),
+    repeating-radial-gradient(circle, #161616 0 2.6px, #2d2d2d 2.6px 5.2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+  opacity: .78;
+  transition: opacity .3s ease, transform .3s ease;
 }
-.music-toggle:hover { background: var(--lemon); }
-.music-toggle__icon { font-size: 17px; line-height: 1; }
-.music-toggle__label em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 17px;
+.music-toggle:hover { opacity: 1; transform: scale(1.06); }
+.music-toggle__core { font-size: 15px; line-height: 1; }
+.music-toggle.playing {
+  opacity: 1;
+  animation: vinyl-spin 4s linear infinite;
 }
-.music-toggle.playing { background: var(--ink); color: var(--paper); }
-.music-toggle.playing:hover { background: var(--ink); }
-.music-toggle.playing .music-toggle__icon {
-  animation: music-beat 1.9s ease-in-out infinite;
+@keyframes vinyl-spin {
+  to { transform: rotate(360deg); }
 }
-@keyframes music-beat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+.music-toggle.playing:hover { animation-play-state: paused; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .music-toggle.playing { animation: none; }
+}
+
+@media (max-width: 860px) {
+  .music-toggle { width: 50px; height: 50px; right: 14px; bottom: 14px; }
 }
 
 /* ─────────── АНИМАЦИЯ ПОЯВЛЕНИЯ ─────────── */

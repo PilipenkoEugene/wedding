@@ -118,22 +118,48 @@ function showError(msg) {
 /* ── Фоновая музыка ── */
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle");
+let musicStoppedByUser = false;
 
-musicBtn.addEventListener("click", async () => {
-  if (music.paused) {
-    try {
-      music.volume = 0.65;
-      await music.play();
-      musicBtn.classList.add("playing");
-      musicBtn.setAttribute("aria-pressed", "true");
-      musicBtn.setAttribute("aria-label", "Выключить музыку");
-    } catch (err) {
-      /* браузер запретил воспроизведение — оставляем кнопку как есть */
-    }
-  } else {
-    music.pause();
-    musicBtn.classList.remove("playing");
-    musicBtn.setAttribute("aria-pressed", "false");
-    musicBtn.setAttribute("aria-label", "Включить музыку: Felicità");
+function setMusicUI(playing) {
+  musicBtn.classList.toggle("playing", playing);
+  musicBtn.setAttribute("aria-pressed", String(playing));
+  musicBtn.setAttribute("aria-label", playing ? "Выключить музыку" : "Музыка: Felicità");
+}
+
+async function startMusic() {
+  try {
+    music.volume = 0.65;
+    await music.play();
+    setMusicUI(true);
+    return true;
+  } catch (err) {
+    return false; // браузер требует взаимодействия с страницей
   }
+}
+
+musicBtn.addEventListener("click", () => {
+  if (music.paused) {
+    musicStoppedByUser = false;
+    startMusic();
+  } else {
+    musicStoppedByUser = true;
+    music.pause();
+    setMusicUI(false);
+  }
+});
+
+/* автозапуск: пробуем сразу; если браузер запретил —
+   стартуем при первом взаимодействии гостя со страницей */
+startMusic().then((ok) => {
+  if (ok) return;
+  const kick = (e) => {
+    if (musicBtn.contains(e.target)) return; // клик по плееру обработает его собственный хендлер
+    if (!musicStoppedByUser && music.paused) startMusic();
+    if (!music.paused || musicStoppedByUser) {
+      ["pointerdown", "touchstart", "keydown"].forEach((t) => document.removeEventListener(t, kick));
+    }
+  };
+  ["pointerdown", "touchstart", "keydown"].forEach((t) =>
+    document.addEventListener(t, kick, { passive: true })
+  );
 });
