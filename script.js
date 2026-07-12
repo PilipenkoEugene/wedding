@@ -114,3 +114,26 @@ function showError(msg) {
   statusEl.textContent = msg;
   statusEl.classList.add("error");
 }
+
+/* ── Фоновая музыка ── */
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-toggle");
+
+musicBtn.addEventListener("click", async () => {
+  if (music.paused) {
+    try {
+      music.volume = 0.65;
+      await music.play();
+      musicBtn.classList.add("playing");
+      musicBtn.setAttribute("aria-pressed", "true");
+      musicBtn.setAttribute("aria-label", "Выключить музыку");
+    } catch (err) {
+      /* браузер запретил воспроизведение — оставляем кнопку как есть */
+    }
+  } else {
+    music.pause();
+    musicBtn.classList.remove("playing");
+    musicBtn.setAttribute("aria-pressed", "false");
+    musicBtn.setAttribute("aria-label", "Включить музыку: Felicità");
+  }
+});

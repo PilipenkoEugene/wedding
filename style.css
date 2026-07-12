@@ -360,10 +360,16 @@ figure { margin: 0; }
 .dresscode__text {
   text-align: center;
   max-width: 560px;
-  margin: 0 auto 48px;
+  margin: 0 auto 20px;
   color: var(--grey);
   font-size: 16.5px;
   line-height: 1.85;
+}
+.dresscode__note {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 44px;
+  font-size: 16px;
 }
 .palette {
   display: flex;
@@ -593,6 +599,42 @@ figure { margin: 0; }
     rotate: 4deg;
   }
   .rsvp__card { padding-top: 60px; }
+}
+
+/* ─────────── МУЗЫКА ─────────── */
+.music-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--sans);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  transition: background .3s ease, color .3s ease;
+}
+.music-toggle:hover { background: var(--lemon); }
+.music-toggle__icon { font-size: 17px; line-height: 1; }
+.music-toggle__label em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+}
+.music-toggle.playing { background: var(--ink); color: var(--paper); }
+.music-toggle.playing:hover { background: var(--ink); }
+.music-toggle.playing .music-toggle__icon {
+  animation: music-beat 1.9s ease-in-out infinite;
+}
+@keyframes music-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
 }
 
 /* ─────────── АНИМАЦИЯ ПОЯВЛЕНИЯ ─────────── */
