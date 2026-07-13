@@ -6,3 +6,4 @@ google-apps-script.gs
 # Превью-скриншоты для обсуждения дизайна
 /*.jpeg
 /*.png
+.playwright-mcp/
